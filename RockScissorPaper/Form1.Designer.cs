@@ -44,6 +44,7 @@
             this.logTextBox.Location = new System.Drawing.Point(12, 12);
             this.logTextBox.Multiline = true;
             this.logTextBox.Name = "logTextBox";
+            this.logTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Horizontal;
             this.logTextBox.Size = new System.Drawing.Size(318, 175);
             this.logTextBox.TabIndex = 0;
             // 
@@ -51,15 +52,19 @@
             // 
             this.userScoreTextBox.Location = new System.Drawing.Point(12, 208);
             this.userScoreTextBox.Name = "userScoreTextBox";
+            this.userScoreTextBox.ReadOnly = true;
             this.userScoreTextBox.Size = new System.Drawing.Size(156, 21);
             this.userScoreTextBox.TabIndex = 1;
+            this.userScoreTextBox.Text = "0";
             // 
             // computerScoreTextBox
             // 
             this.computerScoreTextBox.Location = new System.Drawing.Point(174, 208);
             this.computerScoreTextBox.Name = "computerScoreTextBox";
+            this.computerScoreTextBox.ReadOnly = true;
             this.computerScoreTextBox.Size = new System.Drawing.Size(156, 21);
             this.computerScoreTextBox.TabIndex = 2;
+            this.computerScoreTextBox.Text = "0";
             // 
             // scissorButton
             // 

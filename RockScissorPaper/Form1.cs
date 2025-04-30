@@ -36,8 +36,9 @@ namespace RockScissorPaper
 
         private void scissorButton_Click(object sender, EventArgs e)
         {
-            int currentScore = int.Parse(userScoreTextBox.Text);
-
+            int currentUserScore = int.Parse(userScoreTextBox.Text);
+            int currentComputerScore = int.Parse(computerScoreTextBox.Text);
+            
             HandRanking userHand = HandRanking.Scissors;
             HandRanking computerHand = GetComputerMove();
             GameResult result = GetGameResult(userHand, computerHand);
@@ -45,10 +46,12 @@ namespace RockScissorPaper
             if (result == GameResult.User)
             {
                 logTextBox.Text += $"사용자 : 가위 | {GetHandString(computerHand)} : 컴퓨터 | 승리\r\n";
+                userScoreTextBox.Text = UpdateScore(currentUserScore, result).ToString();
             }
             else if (result == GameResult.Computer)
             {
                 logTextBox.Text += $"사용자 : 가위 | {GetHandString(computerHand)} : 컴퓨터 | 패배\r\n";
+                computerScoreTextBox.Text = UpdateScore(currentComputerScore, result).ToString();
             }
             else if (result == GameResult.Draw)
             {
@@ -58,6 +61,9 @@ namespace RockScissorPaper
 
         private void rockButton_Click(object sender, EventArgs e)
         {
+            int currentUserScore = int.Parse(userScoreTextBox.Text);
+            int currentComputerScore = int.Parse(computerScoreTextBox.Text);
+
             HandRanking userHand = HandRanking.Rock;
             HandRanking computerHand = GetComputerMove();
             GameResult result = GetGameResult(userHand, computerHand);
@@ -65,10 +71,12 @@ namespace RockScissorPaper
             if (result == GameResult.User)
             {
                 logTextBox.Text += $"사용자 : 바위 | {GetHandString(computerHand)} : 컴퓨터 | 승리\r\n";
+                userScoreTextBox.Text = UpdateScore(currentUserScore, result).ToString();
             }
             else if (result == GameResult.Computer)
             {
                 logTextBox.Text += $"사용자 : 바위 | {GetHandString(computerHand)} : 컴퓨터 | 패배\r\n";
+                computerScoreTextBox.Text = UpdateScore(currentComputerScore, result).ToString();
             }
             else if (result == GameResult.Draw)
             {
@@ -78,6 +86,9 @@ namespace RockScissorPaper
 
         private void paperButton_Click(object sender, EventArgs e)
         {
+            int currentUserScore = int.Parse(userScoreTextBox.Text);
+            int currentComputerScore = int.Parse(computerScoreTextBox.Text);
+
             HandRanking userHand = HandRanking.Paper;
             HandRanking computerHand = GetComputerMove();
             GameResult result = GetGameResult(userHand, computerHand);
@@ -85,10 +96,12 @@ namespace RockScissorPaper
             if (result == GameResult.User)
             {
                 logTextBox.Text += $"사용자 : 보 | {GetHandString(computerHand)} : 컴퓨터 | 승리\r\n";
+                userScoreTextBox.Text = UpdateScore(currentUserScore, result).ToString();
             }
             else if (result == GameResult.Computer)
             {
                 logTextBox.Text += $"사용자 : 보 | {GetHandString(computerHand)} : 컴퓨터 | 패배\r\n";
+                computerScoreTextBox.Text = UpdateScore(currentComputerScore, result).ToString();
             }
             else if (result == GameResult.Draw)
             {
@@ -99,7 +112,9 @@ namespace RockScissorPaper
 
         private void resetButton_Click(object sender, EventArgs e)
         {
-
+            userScoreTextBox.Text = "0";
+            computerScoreTextBox.Text = "0";
+            logTextBox.Text += "모든 점수를 초기화 합니다\r\n";
         }
 
         private HandRanking GetComputerMove()   // 컴퓨터가 랜덤한 값으로 가위, 바위, 보 중 하나를 반환하는 함수
@@ -146,13 +161,18 @@ namespace RockScissorPaper
    
         }
 
-        private int UpdateScore(int currentScore)
+        private int UpdateScore(int currentScore, GameResult result)
         {
             /*
              만약 점수가 3점 이상이라면 즉시 0으로 초기화
              */
-            if (currentScore > 3)
+
+            string winner = "";
+
+            if (currentScore > 1)
             {
+                winner = GameResult.User == result ? "사용자" : "컴퓨터";
+                logTextBox.Text += $"3점 이상 득점 하였음으로 {result}의 점수를 0점으로 초기화 합니다.\r\n";
                 return 0;
             }
             else
