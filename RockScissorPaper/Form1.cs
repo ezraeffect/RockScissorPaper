@@ -173,6 +173,10 @@ namespace RockScissorPaper
             {
                 winner = GameResult.User == result ? "사용자" : "컴퓨터";
                 logTextBox.Text += $"3점 이상 득점 하였음으로 {result}의 점수를 0점으로 초기화 합니다.\r\n";
+
+                userScoreTextBox.Text = "0";
+                computerScoreTextBox.Text = "0";
+
                 return 0;
             }
             else
