@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics.Eventing.Reader;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -31,18 +32,28 @@ namespace RockScissorPaper
         public Form1()
         {
             InitializeComponent();
-
-            int userScore, computerScore;
-            userScore = 0;
-            computerScore = 0;
         }
 
         private void scissorButton_Click(object sender, EventArgs e)
         {
+            int currentScore = int.Parse(userScoreTextBox.Text);
+
             HandRanking userHand = HandRanking.Scissors;
             HandRanking computerHand = GetComputerMove();
             GameResult result = GetGameResult(userHand, computerHand);
-            logTextBox.Text += $"{userHand} / {computerHand} = {result}\r\n";
+
+            if (result == GameResult.User)
+            {
+                logTextBox.Text += $"사용자 : 가위 | {GetHandString(computerHand)} : 컴퓨터 | 승리\r\n";
+            }
+            else if (result == GameResult.Computer)
+            {
+                logTextBox.Text += $"사용자 : 가위 | {GetHandString(computerHand)} : 컴퓨터 | 패배\r\n";
+            }
+            else if (result == GameResult.Draw)
+            {
+                logTextBox.Text += $"사용자 : 가위 | {GetHandString(computerHand)} : 컴퓨터 | 무승부\r\n";
+            }
         }
 
         private void rockButton_Click(object sender, EventArgs e)
@@ -50,7 +61,19 @@ namespace RockScissorPaper
             HandRanking userHand = HandRanking.Rock;
             HandRanking computerHand = GetComputerMove();
             GameResult result = GetGameResult(userHand, computerHand);
-            logTextBox.Text += $"{userHand} / {computerHand} = {result}\r\n";
+
+            if (result == GameResult.User)
+            {
+                logTextBox.Text += $"사용자 : 바위 | {GetHandString(computerHand)} : 컴퓨터 | 승리\r\n";
+            }
+            else if (result == GameResult.Computer)
+            {
+                logTextBox.Text += $"사용자 : 바위 | {GetHandString(computerHand)} : 컴퓨터 | 패배\r\n";
+            }
+            else if (result == GameResult.Draw)
+            {
+                logTextBox.Text += $"사용자 : 바위 | {GetHandString(computerHand)} : 컴퓨터 | 무승부\r\n";
+            }
         }
 
         private void paperButton_Click(object sender, EventArgs e)
@@ -58,7 +81,19 @@ namespace RockScissorPaper
             HandRanking userHand = HandRanking.Paper;
             HandRanking computerHand = GetComputerMove();
             GameResult result = GetGameResult(userHand, computerHand);
-            logTextBox.Text += $"{userHand} / {computerHand} = {result}\r\n";
+
+            if (result == GameResult.User)
+            {
+                logTextBox.Text += $"사용자 : 보 | {GetHandString(computerHand)} : 컴퓨터 | 승리\r\n";
+            }
+            else if (result == GameResult.Computer)
+            {
+                logTextBox.Text += $"사용자 : 보 | {GetHandString(computerHand)} : 컴퓨터 | 패배\r\n";
+            }
+            else if (result == GameResult.Draw)
+            {
+                logTextBox.Text += $"사용자 : 보 | {GetHandString(computerHand)} : 컴퓨터 | 무승부\r\n";
+            }
 
         }
 
@@ -102,6 +137,15 @@ namespace RockScissorPaper
             }
         }
 
+        private string GetHandString(HandRanking i)
+        {
+            if (i == HandRanking.Scissors) return "가위";
+            else if (i == HandRanking.Rock) return "바위";
+            else if (i == HandRanking.Paper) return "보";
+            else return "오류";
+   
+        }
+
         private int UpdateScore(int currentScore)
         {
             /*
@@ -113,7 +157,7 @@ namespace RockScissorPaper
             }
             else
             {
-                return currentScore;
+                return ++currentScore;
             }
         }
         
