@@ -12,23 +12,53 @@ namespace RockScissorPaper
 {
     public partial class Form1 : Form
     {
+        enum HandRanking // 가위바위보 족보 열거형
+        {
+            Scissors,   // 0 : 가위
+            Rock,       // 1 : 바위
+            Paper       // 2 : 보
+        }
+
+        enum GameResult // 승부 결과 열거형
+        {
+            Draw,       // 0 : 무승부
+            User,       // 1 : 사용자 승
+            Computer    // 2 : 컴퓨터 승
+        }
+
+        Random random = new Random();
+
         public Form1()
         {
             InitializeComponent();
+
+            int userScore, computerScore;
+            userScore = 0;
+            computerScore = 0;
         }
 
         private void scissorButton_Click(object sender, EventArgs e)
         {
-
+            HandRanking userHand = HandRanking.Scissors;
+            HandRanking computerHand = GetComputerMove();
+            GameResult result = GetGameResult(userHand, computerHand);
+            logTextBox.Text += $"{userHand} / {computerHand} = {result}\r\n";
         }
 
         private void rockButton_Click(object sender, EventArgs e)
         {
-
+            HandRanking userHand = HandRanking.Rock;
+            HandRanking computerHand = GetComputerMove();
+            GameResult result = GetGameResult(userHand, computerHand);
+            logTextBox.Text += $"{userHand} / {computerHand} = {result}\r\n";
         }
 
         private void paperButton_Click(object sender, EventArgs e)
         {
+            HandRanking userHand = HandRanking.Paper;
+            HandRanking computerHand = GetComputerMove();
+            GameResult result = GetGameResult(userHand, computerHand);
+            logTextBox.Text += $"{userHand} / {computerHand} = {result}\r\n";
 
         }
 
@@ -36,5 +66,56 @@ namespace RockScissorPaper
         {
 
         }
+
+        private HandRanking GetComputerMove()   // 컴퓨터가 랜덤한 값으로 가위, 바위, 보 중 하나를 반환하는 함수
+        {
+            switch (random.Next(0, 2))
+            {
+                case 0:
+                    return HandRanking.Scissors; // 열거형에서 가위 값을 반환한다
+                case 1:
+                    return HandRanking.Rock;     // 열거형에서 바위 값을 반환한다
+                case 2:
+                    return HandRanking.Paper;    // 열거형에서 보 값을 반환한다
+                default:
+                    return GetComputerMove();    // 재귀 호출하여 다시 랜덤 값을 반환한다.
+            }
+        }
+
+        private GameResult GetGameResult(HandRanking user, HandRanking computer)    // Parameter로 제공된 값을 계산하여 게임의 결과를 반환하는 함수
+        {
+            // 결과 변수 선언 및 초기화
+            int result = 0;
+
+            // 승부 계산식
+            result = (user - computer + 3) % 3;
+            switch (result)
+            {
+                case 0:
+                    return GameResult.Draw;     // 계산 결과가 0일 경우 무승부 값을 반환한다.
+                case 1:
+                    return GameResult.User;     // 계산 결과가 1일 경우 사용자 승리 값을 반환한다.
+                case 2:
+                    return GameResult.Computer; // 계산 결과가 2일 경우 컴퓨터 승리 값을 반한다.
+                default:
+                    return GetGameResult(user, computer);
+            }
+        }
+
+        private int UpdateScore(int currentScore)
+        {
+            /*
+             만약 점수가 3점 이상이라면 즉시 0으로 초기화
+             */
+            if (currentScore > 3)
+            {
+                return 0;
+            }
+            else
+            {
+                return currentScore;
+            }
+        }
+        
     }
 }
