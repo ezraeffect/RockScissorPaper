@@ -16,5 +16,25 @@ namespace RockScissorPaper
         {
             InitializeComponent();
         }
+
+        private void scissorButton_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void rockButton_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void paperButton_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void resetButton_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
