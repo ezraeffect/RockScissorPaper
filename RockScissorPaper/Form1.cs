@@ -119,7 +119,7 @@ namespace RockScissorPaper
 
         private HandRanking GetComputerMove()   // 컴퓨터가 랜덤한 값으로 가위, 바위, 보 중 하나를 반환하는 함수
         {
-            switch (random.Next(0, 2))
+            switch (random.Next(0, 3))
             {
                 case 0:
                     return HandRanking.Scissors; // 열거형에서 가위 값을 반환한다
